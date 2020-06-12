@@ -1,8 +1,8 @@
 const seq= require('./seq')
-// require('./model')
+require('./model/index')
 !(async ()=>{
     try{
-        await Seq.authenticate();
+        await seq.authenticate();
         console.log('ok')
     }catch(error){
         console.log('error'+error)

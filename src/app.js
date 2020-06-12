@@ -11,7 +11,7 @@ const {REDIS_CONFIG} = require('./config/db')
 const {isProd} =require('./utils/env')
 // 路由
 const index = require('./routes/index')
-const users = require('./routes/users')
+const viewUser = require('./routes/view/user')
 const errorView = require('./routes/view/error')
 
 // error handler
@@ -46,6 +46,8 @@ app.use(async (ctx, next) => {
 })
 app.keys=['key']
 app.use(session({
+    key:'weibo.sid',
+    prefix:'weibo:sess:',
     cookie:{
        path: '/',
        httpOnly: true,
@@ -58,7 +60,9 @@ app.use(session({
 
 // routes
 app.use(index.routes(), index.allowedMethods())
-app.use(users.routes(), users.allowedMethods())
+app.use(viewUser.routes(), viewUser.allowedMethods())
+
+
 app.use(errorView.routes(),errorView.allowedMethods()) //404路由注册到最下面
 // error-handling
 app.on('error', (err, ctx) => {
